@@ -36,7 +36,7 @@ func (t *ClientHello) Encode(data []byte) error {
 	return t.extensions.Encode(data[offset:])
 }
 
-func (t *ClientHello) FindExtension(extensionType uint16) interface{} {
+func (t *ClientHello) FindExtension(extensionType uint16) *HelloExtensionElement {
 	if t.extensions == nil {
 		return nil
 	}
