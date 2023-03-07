@@ -1,4 +1,4 @@
-package geohttp
+package gehttp
 
 import (
 	"crypto/tls"
