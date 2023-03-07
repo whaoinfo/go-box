@@ -1,4 +1,4 @@
-package bufferobject
+package nbuffer
 
 import "errors"
 
