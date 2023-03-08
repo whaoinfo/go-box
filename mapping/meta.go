@@ -6,9 +6,9 @@ import (
 	"reflect"
 )
 
-type IterStructObjectFunc func(ownRV reflect.Value, index int, args ...reflect.Value) error
+type IterStructObjectFunc func(ownRV reflect.Value, index int, args ...interface{}) error
 
-func ScanAllFields(obj interface{}, iterFunc IterStructObjectFunc, args ...reflect.Value) error {
+func ScanAllFields(obj interface{}, iterFunc IterStructObjectFunc, callArgs ...interface{}) error {
 	rt := reflect.TypeOf(obj)
 	rv := reflect.ValueOf(obj)
 	if rv.Kind() == reflect.Ptr {
@@ -20,7 +20,7 @@ func ScanAllFields(obj interface{}, iterFunc IterStructObjectFunc, args ...refle
 	}
 
 	for i := 0; i < rt.NumField(); i++ {
-		if err := iterFunc(rv, i, args...); err != nil {
+		if err := iterFunc(rv, i, callArgs...); err != nil {
 			return err
 		}
 	}
