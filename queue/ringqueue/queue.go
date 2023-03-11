@@ -1,20 +1,24 @@
 package ringqueue
 
+import "sync"
+
 type RingQueue struct {
-	maxSize int
-	items   []interface{}
-	front   int
-	rear    int
+	lock      sync.Mutex
+	maxLength int
+	items     []interface{}
+	front     int
+	rear      int
 }
 
-func NewRingQueue(maxSize int) *RingQueue {
+func NewRingQueue(maxLength int) *RingQueue {
 	return &RingQueue{
-		maxSize: maxSize,
-		items:   make([]interface{}, maxSize),
-		front:   0,
-		rear:    0,
+		maxLength: maxLength,
+		items:     make([]interface{}, maxLength),
+		front:     0,
+		rear:      0,
 	}
 }
+
 
 func (t *RingQueue) Put(item interface{}) bool {
 	if t.IsFull() {
@@ -22,7 +26,7 @@ func (t *RingQueue) Put(item interface{}) bool {
 	}
 
 	t.items[t.rear] = item
-	t.rear = (t.rear + 1) % t.maxSize
+	t.rear = (t.rear + 1) % t.maxLength
 	return true
 }
 
@@ -44,9 +48,10 @@ func (t *RingQueue) Pop() (interface{}, bool) {
 	}
 
 	retItem := t.items[t.front]
-	t.front = (t.front + 1) % t.maxSize
+	t.front = (t.front + 1) % t.maxLength
 	return retItem, false
 }
+
 
 func (t *RingQueue) Pops(count int) (retList []interface{}) {
 	for i := 0; i < count; i++ {
@@ -65,9 +70,9 @@ func (t *RingQueue) IsEmpty() bool {
 }
 
 func (t *RingQueue) IsFull() bool {
-	return t.front == ((t.rear + 1) % t.maxSize)
+	return t.front == ((t.rear + 1) % t.maxLength)
 }
 
 func (t *RingQueue) Length() int {
-	return (t.rear - t.front + t.maxSize) % t.maxSize
+	return (t.rear - t.front + t.maxLength) % t.maxLength
 }
