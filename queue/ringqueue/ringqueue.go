@@ -16,7 +16,7 @@ func NewRingQueue(maxSize int) *RingQueue {
 	}
 }
 
-func (t *RingQueue) Push(item interface{}) bool {
+func (t *RingQueue) Put(item interface{}) bool {
 	if t.IsFull() {
 		return false
 	}
@@ -24,6 +24,18 @@ func (t *RingQueue) Push(item interface{}) bool {
 	t.items[t.rear] = item
 	t.rear = (t.rear + 1) % t.maxSize
 	return true
+}
+
+func (t *RingQueue) Puts(items ...interface{}) int {
+	c := 0
+	for n, item := range items {
+		if !t.Put(item) {
+			break
+		}
+		c = n + 1
+	}
+
+	return c
 }
 
 func (t *RingQueue) Pop() (interface{}, bool) {
@@ -34,6 +46,18 @@ func (t *RingQueue) Pop() (interface{}, bool) {
 	retItem := t.items[t.front]
 	t.front = (t.front + 1) % t.maxSize
 	return retItem, false
+}
+
+func (t *RingQueue) Pops(count int) (retList []interface{}) {
+	for i := 0; i < count; i++ {
+		item, ok := t.Pop()
+		if !ok {
+			return
+		}
+		retList = append(retList, item)
+	}
+
+	return
 }
 
 func (t *RingQueue) IsEmpty() bool {
