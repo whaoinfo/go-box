@@ -19,7 +19,6 @@ func NewRingQueue(maxLength int) *RingQueue {
 	}
 }
 
-
 func (t *RingQueue) Put(item interface{}) bool {
 	if t.IsFull() {
 		return false
@@ -49,9 +48,8 @@ func (t *RingQueue) Pop() (interface{}, bool) {
 
 	retItem := t.items[t.front]
 	t.front = (t.front + 1) % t.maxLength
-	return retItem, false
+	return retItem, true
 }
-
 
 func (t *RingQueue) Pops(count int) (retList []interface{}) {
 	for i := 0; i < count; i++ {
