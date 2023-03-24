@@ -22,7 +22,7 @@ func defaultLoggerInit() error {
 	return nil
 }
 
-func SetDefaultLogOutPrefix(outPrefix string)  {
+func SetDefaultLogOutPrefix(outPrefix string) {
 	defaultLog.SetOutPrefix(outPrefix)
 }
 
