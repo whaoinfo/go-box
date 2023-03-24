@@ -6,6 +6,7 @@ import (
 
 var (
 	defaultLog = &Logger{}
+	outPrefix  = ""
 )
 
 func init() {
@@ -15,11 +16,15 @@ func init() {
 }
 
 func defaultLoggerInit() error {
-	if err := defaultLog.Init(LevelALL, "", "", ""); err != nil {
+	if err := defaultLog.Init(LevelALL, outPrefix, "", ""); err != nil {
 		return err
 	}
 	defaultLog.SetCallDepth(4)
 	return nil
+}
+
+func SetOutPrefix(prefix string) {
+	outPrefix = prefix
 }
 
 func SetDefaultLogLevel(logLevelDesc string) {
