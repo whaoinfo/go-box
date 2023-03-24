@@ -62,6 +62,14 @@ func (t *Logger) SetLogLevel(level LogLevel) {
 	t.level = level
 }
 
+func (t *Logger) SetOutPrefix(outPrefix string) {
+	t.outPrefix = outPrefix
+	if t.logger == nil {
+		return
+	}
+	t.logger.SetPrefix(outPrefix)
+}
+
 func (t *Logger) bindLogFile(dirPath, fileName string) error {
 	if dirPath == "" || fileName == "" {
 		t.isStdOut = true
