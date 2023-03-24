@@ -38,6 +38,7 @@ type Logger struct {
 	fileName  string
 	logFile   *os.File
 	isStdOut  bool
+	outPrefix string
 }
 
 func (t *Logger) Init(level LogLevel, outPrefix, dirPath, fileName string) error {
@@ -48,7 +49,8 @@ func (t *Logger) Init(level LogLevel, outPrefix, dirPath, fileName string) error
 		return err
 	}
 
-	t.logger = log.New(t.logFile, outPrefix, log.Llongfile|log.Ldate|log.Ltime)
+	t.outPrefix = outPrefix
+	t.logger = log.New(t.logFile, t.outPrefix, log.Llongfile|log.Ldate|log.Ltime)
 	return nil
 }
 

@@ -2,11 +2,11 @@ package logger
 
 import (
 	"log"
+	"os"
 )
 
 var (
 	defaultLog = &Logger{}
-	outPrefix  = ""
 )
 
 func init() {
@@ -16,15 +16,12 @@ func init() {
 }
 
 func defaultLoggerInit() error {
+	outPrefix := os.Getenv("GO-BOX-LOG-PREFIX")
 	if err := defaultLog.Init(LevelALL, outPrefix, "", ""); err != nil {
 		return err
 	}
 	defaultLog.SetCallDepth(4)
 	return nil
-}
-
-func SetOutPrefix(prefix string) {
-	outPrefix = prefix
 }
 
 func SetDefaultLogLevel(logLevelDesc string) {
