@@ -47,6 +47,7 @@ func (t *RingQueue) Pop() (interface{}, bool) {
 	}
 
 	retItem := t.items[t.front]
+	t.items[t.front] = nil
 	t.front = (t.front + 1) % t.maxLength
 	return retItem, true
 }
