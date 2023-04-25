@@ -34,6 +34,10 @@ func SetDefaultLogLevel(logLevelDesc string) {
 	defaultLog.SetLogLevel(lv)
 }
 
+func GetDefaultLogLevel() LogLevel {
+	return defaultLog.GetLogLevel()
+}
+
 func All(v ...interface{}) {
 	defaultLog.All("", v...)
 }
